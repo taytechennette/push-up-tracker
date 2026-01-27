@@ -1,3 +1,7 @@
+st.set_page_config(
+    page_title="Push-Up Tracker",
+    layout="centered"
+)
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import datetime
