@@ -1,8 +1,11 @@
-st.set_page_config(
-    page_title="Push-Up Tracker",
-    layout="centered"
-)
 import streamlit as st
+
+st.set_page_config(
+    page_title="Push-up Tracker",
+    layout="centered",
+    initial_sidebar_state="collapsed"
+)
+
 from streamlit_gsheets import GSheetsConnection
 import datetime
 import pandas as pd
