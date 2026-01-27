@@ -45,7 +45,7 @@ already_logged = not existing_data[
 ].empty
 
 if already_logged:
-    st.warning(f"You’ve already logged today, {user} 💪 Come back tomorrow.")
+    st.warning(f"Nice try, {user} 💪 You've already logged today.")
     st.stop()  # 🔥 hard stop — prevents writes
 
 # -----------------------------
