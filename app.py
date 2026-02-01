@@ -1,4 +1,6 @@
 import streamlit as st
+import pytz
+
 from streamlit_gsheets import GSheetsConnection
 import datetime
 import pandas as pd
@@ -33,19 +35,30 @@ st.subheader("100 Pushups. 365 Days. One Winner.")
 names = ["Vail", "Marcus", "Tayte"]
 user = st.selectbox("Who is logging today?", names)
 
-today = str(datetime.date.today())
+TORONTO_TZ = pytz.timezone("America/Toronto")
+today = datetime.datetime.now(TORONTO_TZ).strftime("%Y-%m-%d")
 existing_data = load_data()
+
+# Normalize data
+existing_data["Date"] = (
+    pd.to_datetime(existing_data["Date"], errors="coerce")
+    .dt.strftime("%Y-%m-%d")
+)
+
+existing_data["Name"] = existing_data["Name"].astype(str).str.strip()
+
 
 # -----------------------------
 # Check if already logged
 # -----------------------------
-already_logged = not existing_data[
+already_logged = (
     (existing_data["Date"] == today) &
     (existing_data["Name"] == user)
-].empty
+).any()
+
 
 if already_logged:
-    st.warning(f"Nice try, {user} 💪 You've already logged today.")
+    st.warning(f"Nice try, {user}, you've already logged today.")
     st.stop()  # 🔥 hard stop — prevents writes
 
 # -----------------------------
